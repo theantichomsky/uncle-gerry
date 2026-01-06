@@ -1,0 +1,13 @@
+.Rhistory
+.RData
+.Ruserdata
+*.png
+*.pdf
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+.DS_Store
+Thumbs.db
+
