@@ -1,4 +1,5 @@
---Personal Note-- This is a repository for a script that runs a sample algorithm that districts for a nondescript 269-seat parliament in a fictional country that is roughly the shape of the general Northern California area.
+--Personal Note-- 
+This is a repository for a script that runs a sample algorithm that districts for a nondescript 269-seat parliament in a fictional country that is roughly the shape of the general Northern California area.
 
 Let me say: I am by no means a seasoned developer. This is not very useful, nor did I make it with much reservations. It is as long as it is because I kept adding more and more stupid things afterwards and only went back to debug when the script literally wouldn't run. I really also should make it clear that I'm not trying to reflect any genuine political convictions with this project. I find the electoral process to be one of the most magnificent, radical, terrifying, truely-byzantine political formula for a mode of government. Having made physical maps myself for a long time, I started to play around with some packages while I was going over the most recent census data for my home state of California. I encountered a lot of problems and learned a lot from debugging, and while this is the less-than-satisfying product of my little investigation, I am still quite pleased with the overall experience.
 
@@ -10,9 +11,12 @@ As of 2030, there are 406 members of the Legislative Court elected to serve four
 
 269 national territorial seats elected by first-past-the-post voting
 137 functional territorial seats elected by party-list proportional representation voting with seats apportioned using the greatest divisor method.
---Dependencies-- R with packages: --sf, ggplot2, tigris (as a note, this will run pretty slow because of how large the map files are), tidycensus, dplyr, cowplot, classInt-- Also Census API key from https://api.census.gov/data/key_signup.html. You set the key at tidycensus::census_api_key("YOUR_KEY", install = TRUE).
 
---Summary-- Before you run the algorithm it'll check that you have all the dependecies installed. If you're missing any, it'll install them automatically. Note that running this involves downloading large shapefiles and performing intensive spatial calculations, so it goes without saying that you should have a stable internet connection and sufficient RAM.
+--Dependencies-- 
+R with packages: --sf, ggplot2, tigris (as a note, this will run pretty slow because of how large the map files are), tidycensus, dplyr, cowplot, classInt-- Also Census API key from https://api.census.gov/data/key_signup.html. You set the key at tidycensus::census_api_key("YOUR_KEY", install = TRUE).
+
+--Summary-- 
+Before you run the algorithm it'll check that you have all the dependecies installed. If you're missing any, it'll install them automatically. Note that running this involves downloading large shapefiles and performing intensive spatial calculations, so it goes without saying that you should have a stable internet connection and sufficient RAM.
 
 Once it starts, the script will start fetching county boundaries, census tracts, and some specified city boundaries. Basically the total population of the 30-county region is divided into 269 target districts by dissolving adjacent census tracts into districts based on population size. I also set specific rules for San Francisco, San Diego, and San Jose. The former two are constrained to eight districts each, while San Jose and all other county remainders are allocated districts purely based on their population math. I also wrote some cat functions for tracking the run progress because I'm impatient.
 
