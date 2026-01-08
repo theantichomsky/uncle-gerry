@@ -1,6 +1,6 @@
 --Run--
-Register Census key: census_api_key("YOUR_KEY", install=TRUE). Execute script. Wait for.png output. 
-Target: 269 districts. Ideal size: total_pop / 269. SF & Sacramento Cities: Fixed at 8. Others: round(pop / ideal). Start spatial merging.
+Register Census key: census_api_key("YOUR_KEY", install=TRUE). Execute script. 
+Target: 269 districts. Ideal size: total_pop / 269. SF & Sacramento Cities: Fixed at 8. Others: round(pop / ideal). Start spatial merging. Wait for plot output. Run save_map to save png.
 
 --Dependencies-- 
 R with packages: --sf, ggplot2, tigris (as a note, this will run pretty slow because of how large the map files are), tidycensus, dplyr, cowplot, classInt-- Also Census API key from https://api.census.gov/data/key_signup.html. You set the key at tidycensus::census_api_key("YOUR_KEY", install = TRUE).
