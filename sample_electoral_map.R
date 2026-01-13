@@ -235,15 +235,15 @@ district_within_county <- function(county_name, target_districts_county, all_tra
     if (length(adjacent_tract_ids) > 0) unique(assignment[adjacent_tract_ids]) else integer(0)
   }
   
-  calc_district_pops <- function(assignment) {
+  calc_district_pops_df <- function(assignment) {
+    # Return a stable (DISTRICT, POP) data frame to avoid length-mismatch errors
+    # when constructing data.frames from separate vectors.
     county_tracts %>%
       st_drop_geometry() %>%
       mutate(DISTRICT = assignment) %>%
       group_by(DISTRICT) %>%
-      summarise(POP = sum(POPULATION, na.rm = TRUE), .groups = "drop") %>%
-      pull(POP)
+      summarise(POP = sum(POPULATION, na.rm = TRUE), .groups = "drop")
   }
-  
   current_districts <- length(unique(district_assignment))
   iteration <- 0
   
@@ -258,10 +258,11 @@ district_within_county <- function(county_name, target_districts_county, all_tra
       cat(sprintf("  Iteration %d: %d districts remaining\n", iteration, current_districts))
     }
     
-    district_pops <- calc_district_pops(district_assignment)
-    unique_districts <- unique(district_assignment)
+  district_df_all <- calc_district_pops_df(district_assignment)
+    unique_districts <- district_df_all$DISTRICT
+    district_pops <- district_df_all$POP
     
-    district_df <- data.frame(DISTRICT = unique_districts, POP = district_pops) %>%
+    district_df <- district_df_all %>%
       filter(POP < ideal_pop_county * 1.2) %>%
       arrange(POP)
     
