@@ -275,19 +275,16 @@ district_within_county <- function(county_name, target_districts_county, all_tra
       dist1_id <- district_df$DISTRICT[i]
       dist1_pop <- district_df$POP[i]
       if (dist1_pop >= ideal_pop_county * 0.9) next
-      
       adj_districts <- find_adjacent_districts(dist1_id, district_assignment)
       adj_districts <- adj_districts[adj_districts != dist1_id]
       
       if (length(adj_districts) > 0) {
-        adj_pops <- data.frame(DISTRICT = unique_districts, POP = district_pops) %>%
+        adj_pops <- district_df_all %>%
           filter(DISTRICT %in% adj_districts) %>%
           arrange(POP)
-        
         for (j in 1:nrow(adj_pops)) {
           dist2_pop <- adj_pops$POP[j]
           combined_pop <- dist1_pop + dist2_pop
-          
           if (combined_pop <= ideal_pop_county * 2.0) {
             score <- abs(combined_pop - ideal_pop_county) + ((dist1_pop + dist2_pop) / ideal_pop_county * 0.1)
             if (score < best_score) {
