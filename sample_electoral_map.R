@@ -318,9 +318,10 @@ district_within_county <- function(county_name, target_districts_county, all_tra
   }
   
   while (current_districts > target_districts_county) {
-    district_pops <- calc_district_pops(district_assignment)
-    unique_districts <- unique(district_assignment)
-    district_df <- data.frame(DISTRICT = unique_districts, POP = district_pops) %>% arrange(POP)
+   district_df_all <- calc_district_pops_df(district_assignment)
+    unique_districts <- district_df_all$DISTRICT
+    district_pops <- district_df_all$POP
+    district_df <- district_df_all %>% arrange(POP)
     
     smallest_dist <- district_df$DISTRICT[1]
     adj_districts <- find_adjacent_districts(smallest_dist, district_assignment)
